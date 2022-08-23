@@ -1,0 +1,133 @@
+version: "3"
+services:
+    # project
+    app:
+        container_name: my-applycation-name
+        build:
+            args:
+                user: doode
+                uid: 1000
+            context: ./
+            dockerfile: Dockerfile
+        image: app
+        restart: always
+        working_dir: /var/www/
+        volumes:
+            - ./:/var/www
+        environment:
+            - APP_NAME=my-app
+            - DB_DATABASE=laravel
+            - DB_PASSWORD=root
+            - DB_USERNAME=root
+            - DB_HOST=mysql
+            - REDIS_HOST=redis
+            - CACHE_DRIVER=redis
+            - QUEUE_CONNECTION=redis
+            - SESSION_DRIVER=redis
+            - REDIS_PASSWORD=null
+            - REDIS_PORT=6379
+            - MAIL_MAILER=smtp
+            - MAIL_HOST=mailhog
+            - MAIL_PORT=1025
+            - MAIL_USERNAME=null
+            - MAIL_PASSWORD=null
+            - MAIL_ENCRYPTION=null
+            - MAIL_FROM_ADDRES=my-email@example.com
+            - MAIL_FROM_NAME="${APP_NAME}"
+        networks:
+            - my-applycation-name
+        depends_on:
+            - mysql
+            - redis
+
+    # nginx
+    nginx:
+        container_name: nginx
+        image: nginx:alpine
+        restart: unless-stopped
+        ports:
+            - 8180:80
+        volumes:
+            - ./:/var/www
+            - ./docker/nginx/:/etc/nginx/conf.d/
+        networks:
+            - my-applycation-name
+        depends_on:
+            - app
+
+    # db mysql
+    mysql:
+        container_name: mysql
+        image: mysql:5.7.22
+        restart: always
+        tty: true
+        environment:
+            MYSQL_DATABASE: laravel
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_PASSWORD: root
+            MYSQL_USER: root
+            SERVICE_TAGS: dev
+            SERVICE_NAME: mysql
+        volumes:
+            - ./docker/mysql/dbdata:/var/lib/mysql
+        ports:
+            - 3388:3306
+        networks:
+            - my-applycation-name
+
+    #PHPMYADMIN  Service
+    phpmyadmin:
+      container_name: phpmyadmin
+      image: phpmyadmin/phpmyadmin:latest
+      environment:
+        - PMA_HOST=mysql
+        - PMA_USER=root
+        - PMA_PASSWORD=root
+      restart: always
+      ports:
+        - 8181:80
+      networks:
+        - my-applycation-name
+      depends_on:
+        - mysql
+
+    # redis
+    redis:
+        container_name: redis
+        image: redis:latest
+        networks:
+            - my-applycation-name
+
+    # queue
+    queue:
+        container_name: queue
+        build:
+            args:
+                user: doode
+                uid: 1000
+            context: ./
+            dockerfile: Dockerfile
+        restart: unless-stopped
+        command: "php artisan queue:work"
+        volumes:
+            - ./:/var/www
+        depends_on:
+            - redis
+            - app
+            - nginx
+        networks:
+            - my-applycation-name
+
+    # Servidor de E-mail
+    mailhog:
+        image: mailhog/mailhog:latest
+        container_name: mailhog
+        ports:
+            - "8003:1025"
+            - "8100:8025"
+        networks:
+            - my-applycation-name
+
+networks:
+    nome-da-minha-aplicacao:
+        driver: bridge
