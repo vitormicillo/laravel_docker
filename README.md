@@ -17,7 +17,7 @@
  * [Mail Hog](https://github.com/mailhog/MailHog)
 
 **Notes:** 
-- These below commands are for Linux and Mac environment, for Windows is necessary to have WSL
+- These below commands are tested with Linux Ubuntu/Debian, for Windows is necessary to have WSL
 - Is up to you to rename your project folder name .
 - On your file **docker-compose** the parameters  **DB_HOST**, **CACHE_DRIVER**, **REDIS_HOST** must have the same name as your container.
 Docker automatically references and identifies the IP of the container and adds it to the environment variable of the .env, so it's enough to just put the container name instead of the ip.
@@ -29,24 +29,21 @@ Clone the repository
 git clone https://github.com/vitormicillo/laravel_docker.git
 ```
 
-You can clone Laravel repository or run composer to have the latest Laravel version
+You can clone Laravel repository from github in case you don't want to install **composer package manager** on your local system
 
 ```sh
 git clone https://github.com/laravel/laravel.git example-project
 ``` 
-or
+or using **composer** to install 
 
 ```sh
 composer create-project laravel/laravel my-application-name
 ```
+----
+#### Copy "docker-compose.yml", "Dockerfile" and the "docker folder" to your project.
+----
 
-Copy docker-compose.yml, Dockerfile and docker directory for our recent project created.
-
-```sh
-cp -r laravel_docker/* example-project/
-```
-
-Creating the .env Laravel file environment
+Cloning the .env file environment
 ```sh
 cp -r .env.example .env
 ```

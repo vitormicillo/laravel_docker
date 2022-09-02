@@ -2,10 +2,10 @@ version: "3"
 services:
     # project
     app:
-        container_name: my-applycation-name
+        container_name: my-application-name
         build:
             args:
-                user: doode
+                user: laravel
                 uid: 1000
             context: ./
             dockerfile: Dockerfile
@@ -35,7 +35,7 @@ services:
             - MAIL_FROM_ADDRES=my-email@example.com
             - MAIL_FROM_NAME="${APP_NAME}"
         networks:
-            - my-applycation-name
+            - my-application-name
         depends_on:
             - mysql
             - redis
@@ -51,7 +51,7 @@ services:
             - ./:/var/www
             - ./docker/nginx/:/etc/nginx/conf.d/
         networks:
-            - my-applycation-name
+            - my-application-name
         depends_on:
             - app
 
@@ -73,7 +73,7 @@ services:
         ports:
             - 3388:3306
         networks:
-            - my-applycation-name
+            - my-application-name
 
     #PHPMYADMIN  Service
     phpmyadmin:
@@ -87,7 +87,7 @@ services:
       ports:
         - 8181:80
       networks:
-        - my-applycation-name
+        - my-application-name
       depends_on:
         - mysql
 
@@ -96,14 +96,14 @@ services:
         container_name: redis
         image: redis:latest
         networks:
-            - my-applycation-name
+            - my-application-name
 
     # queue
     queue:
         container_name: queue
         build:
             args:
-                user: doode
+                user: laravel
                 uid: 1000
             context: ./
             dockerfile: Dockerfile
@@ -116,7 +116,7 @@ services:
             - app
             - nginx
         networks:
-            - my-applycation-name
+            - my-application-name
 
     # Servidor de E-mail
     mailhog:
@@ -126,8 +126,8 @@ services:
             - "8003:1025"
             - "8100:8025"
         networks:
-            - my-applycation-name
+            - my-application-name
 
 networks:
-    nome-da-minha-aplicacao:
+    my-application-name:
         driver: bridge
