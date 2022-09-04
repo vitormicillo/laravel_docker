@@ -2,8 +2,10 @@
 # ABOUT THE PROJECT
 - A complete docker environment to work with Laravel or Lumen.
 - This initial structure is excellent for developing a SPA Laravel API
+- All commands used were tested using Ubuntu/Debian and OpenSuse Tumbleweed.
 - Any PR are welcome
-- All commands used were tested using Ubuntu and its derivatives.
+
+<br>
 
 # STRUCTURE
  * [Laravel 9](https://laravel.com)
@@ -16,13 +18,17 @@
  * [Yarn](https://https://yarnpkg.com/)
  * [Mail Hog](https://github.com/mailhog/MailHog)
 
-**Notes:** 
-- These below commands are tested with Linux Ubuntu/Debian, for Windows is necessary to have WSL
-- Is up to you to rename your project folder name .
+<br>
+
+**🔔 Notes:** 
+- These below commands are tested with Linux Ubuntu/Debian and OpenSuse Tumbleweed, for Windows is necessary to have WSL
+- Is up to you to rename your project folder name
 - On your file **docker-compose** the parameters  **DB_HOST**, **CACHE_DRIVER**, **REDIS_HOST** must have the same name as your container.
 Docker automatically references and identifies the IP of the container and adds it to the environment variable of the .env, so it's enough to just put the container name instead of the ip.
 
- # STEP BY STEP
+<br>
+
+# STEP BY STEP
 
 Clone the repository
 ```sh
@@ -45,7 +51,7 @@ composer create-project laravel/laravel my-application-name
 
 Cloning the .env file environment
 ```sh
-cp -r .env.example .env
+cp .env.example .env
 ```
 
 ----
@@ -55,10 +61,33 @@ cp -r .env.example .env
 ```sh
 docker-compose up -d
 ```
+----
+### 🔔 Note:
+When all containers are finished and properly configured 🤙🏻, you will be able to see the list of containers and details with the command:
 
+```sh
+docker images
+
+# Command output should looks like 👇🏻
+```
+
+| REPOSITORY 					| TAG 	 | IMAGE ID 	| CREATED 		 | SIZE |
+| ----------------------------- | ------ | ------------ | -------------- | ----- |
+| laravel-example-project-queue | latest | 475c83b2168a | 33 minutes ago | 791MB |
+| app 							| latest | 475c83b2168a | 33 minutes ago | 791MB |
+| redis							| latest | dc7b40a0b05d | 12 days ago 	 | 791MB |
+| nginx 						| alpine | 475c83b2168a | 3 weeks ago 	 | 791MB |
+| phpmyadmin/phpmyadmin 		| latest | 475c83b2168a | 3 mmonths ago  | 791MB |
+| mailhog/mailhog 				| latest | 4de68494cd0d | 2 years ago 	 | 791MB |
+| mysql 						| 5.7.22 | 4a4023c7e22a | 4 years ago 	 | 791MB |
+----
+
+<br>
+
+----
 ### To access the container bash
 ```sh
-docker-compose exec project_name bash
+docker-compose exec app bash
 ```
 ----
 ### Run the following commands
@@ -72,7 +101,7 @@ php artisan config:cache
 
 php artisan storage:link #Not mandatory
 
-npm or yarn install
+npm or yarn install #Not mandatory
 ```
 
 - To access your application  http://localhost:8180
@@ -81,7 +110,7 @@ npm or yarn install
 
 <br>
 
-**Note:**
+**🔔 Note:**
 - Don't forget to add the file **.gitignore** to the folder **/docker/mysql/*** 
 - if you get an error when you try to build the application with **docker-compose up -d --build**  
   check if the folder **docker/mysql/dbdata** has the correct permission 644 and is not protected to write, update or delete.
@@ -94,7 +123,7 @@ npm or yarn install
 
 <br>
 
-## SOME CUSTOM CHANGES YOU CAN DO
+## ⭐️ SOME CUSTOM CHANGES YOU CAN DO
 Changing the ports on docker-compose file.
 
 for example, from port 8181
@@ -150,7 +179,7 @@ fastcgi_pass app:9000;
 ```
 to
 ```sh
-fastcgi_pass nome-novo-aqui:9000;
+fastcgi_pass my-application-name:9000;
 ```
 
 ## DOCKER HELPFUL COMMANDS
