@@ -75,11 +75,11 @@ docker images
 | ----------------------------- | ------ | ------------ | -------------- | ----- |
 | laravel-example-project-queue | latest | 475c83b2168a | 33 minutes ago | 791MB |
 | app 							| latest | 475c83b2168a | 33 minutes ago | 791MB |
-| redis							| latest | dc7b40a0b05d | 12 days ago 	 | 791MB |
-| nginx 						| alpine | 475c83b2168a | 3 weeks ago 	 | 791MB |
-| phpmyadmin/phpmyadmin 		| latest | 475c83b2168a | 3 mmonths ago  | 791MB |
-| mailhog/mailhog 				| latest | 4de68494cd0d | 2 years ago 	 | 791MB |
-| mysql 						| 5.7.22 | 4a4023c7e22a | 4 years ago 	 | 791MB |
+| redis							| latest | dc7b40a0b05d | 12 days ago 	 | 117MB |
+| nginx 						| alpine | 475c83b2168a | 3 weeks ago 	 | 023MB |
+| phpmyadmin/phpmyadmin 		| latest | 475c83b2168a | 3 mmonths ago  | 510MB |
+| mailhog/mailhog 				| latest | 4de68494cd0d | 2 years ago 	 | 392MB |
+| mysql 						| 5.7.22 | 4a4023c7e22a | 4 years ago 	 | 372MB |
 ----
 
 <br>
