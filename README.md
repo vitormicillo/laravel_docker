@@ -88,6 +88,7 @@ docker images
 ### To access the container bash
 ```sh
 docker-compose exec app bash
+#note: your application name is customizable, so this name may vary from project to project
 ```
 ----
 ### Run the following commands
